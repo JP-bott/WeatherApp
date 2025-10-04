@@ -3,34 +3,56 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>NCR (Philippines) Weather App</title>
+    <title>NCR (Philippines) Weather App</title>
     <!-- Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="" crossorigin="anonymous" />
+
+    <style>
+      /* small custom touches on top of Tailwind */
+      body {
+        background-image: linear-gradient(180deg, rgba(14,165,233,0.04), rgba(99,102,241,0.02));
+      }
+      .card-hover { transition: transform 180ms ease, box-shadow 180ms ease; }
+      .card-hover:hover { transform: translateY(-6px); box-shadow: 0 12px 30px rgba(2,6,23,0.08); }
+      .city-pill { transition: background-color 150ms ease, transform 150ms ease; }
+      .city-pill:hover { transform: translateY(-2px); }
+      /* subtle skeleton loader style for future use */
+      .skeleton { background: linear-gradient(90deg, rgba(255,255,255,0.06) 25%, rgba(255,255,255,0.12) 50%, rgba(255,255,255,0.06) 75%); background-size: 200% 100%; animation: shimmer 1.2s linear infinite; }
+      @keyframes shimmer { 0% { background-position: 200% 0 } 100% { background-position: -200% 0 } }
+    </style>
   </head>
-  <body class="bg-slate-50 text-slate-800 min-h-screen">
-    <div class="max-w-4xl mx-auto p-6">
-      <header class="flex items-center justify-between mb-6">
-        <h1 class="text-2xl font-bold">NCR (Philippines) Weather</h1>
-        <div class="text-sm text-slate-600">Powered by OpenWeatherMap</div>
+  <body class="min-h-screen text-slate-800 antialiased">
+    <div class="max-w-5xl mx-auto p-6">
+      <header class="flex items-center justify-between mb-8">
+        <div class="flex items-center gap-4">
+          <div class="flex-none w-12 h-12 rounded-xl bg-white shadow-md flex items-center justify-center text-2xl">☁️</div>
+          <div>
+            <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight">NCR Weather</h1>
+            <div class="text-sm text-slate-500">National Capital Region — Powered by OpenWeatherMap</div>
+          </div>
+        </div>
+        <div class="hidden sm:flex items-center gap-3 text-sm text-slate-600">
+          <span class="px-3 py-1 rounded-full bg-white/40">Updated live</span>
+        </div>
       </header>
 
       <section class="mb-6">
-  <p class="mb-3">Quick cities in the National Capital Region (Philippines):</p>
+        <p class="mb-3 text-slate-600">Quick cities in the National Capital Region (Philippines):</p>
         <div id="cities" class="flex flex-wrap gap-2"></div>
       </section>
 
       <section class="mb-6">
-        <label class="block text-sm mb-1">Search city</label>
-        <div class="flex gap-2">
-          <input id="cityInput" class="flex-1 px-3 py-2 border rounded" placeholder="Type city name (e.g. New Delhi)" />
-          <button id="searchBtn" class="px-4 py-2 bg-sky-600 text-white rounded">Search</button>
+        <label class="block text-sm mb-2 text-slate-600">Search city</label>
+        <div class="flex gap-3">
+          <input id="cityInput" class="flex-1 px-4 py-3 rounded-xl border border-slate-200 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-300" placeholder="Type city name (e.g. Quezon City)" />
+          <button id="searchBtn" class="px-5 py-3 bg-gradient-to-r from-sky-500 to-indigo-500 text-white rounded-xl shadow-md hover:brightness-105 focus:outline-none focus:ring-2 focus:ring-indigo-300">Search</button>
         </div>
       </section>
 
       <section class="mb-6">
-        <label class="block text-sm mb-1">Display fields</label>
+        <label class="block text-sm mb-2 text-slate-600">Display fields</label>
         <div id="filters" class="flex flex-wrap gap-3 items-center">
           <label class="flex items-center gap-2"><input type="checkbox" id="showIcon" /> <span class="text-sm">Icon</span></label>
           <label class="flex items-center gap-2"><input type="checkbox" id="showTemp" checked /> <span class="text-sm">Temperature</span></label>
@@ -40,9 +62,26 @@
         </div>
       </section>
 
-      <section id="result" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></section>
+      <section id="result" class="grid grid-cols-1 sm:grid-cols-2 gap-6"></section>
     </div>
 
     <script src="/app.js"></script>
+    <script>
+      // enhance city buttons when they are created by app.js
+      const observer = new MutationObserver(() => {
+        document.querySelectorAll('#cities button').forEach(btn => {
+          btn.classList.add('city-pill', 'px-4', 'py-2', 'bg-white', 'rounded-full', 'shadow-sm', 'text-sm', 'hover:bg-sky-50');
+        });
+      });
+      observer.observe(document.getElementById('cities'), { childList: true, subtree: false });
+
+      // styling for result cards added by app.js when rendering: ensure consistent classes
+      const cardsObserver = new MutationObserver(() => {
+        document.querySelectorAll('#result > div').forEach(card => {
+          card.classList.add('card-hover', 'p-4', 'bg-white', 'rounded-lg');
+        });
+      });
+      cardsObserver.observe(document.getElementById('result'), { childList: true, subtree: false });
+    </script>
   </body>
 </html>
