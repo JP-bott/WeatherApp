@@ -36,10 +36,16 @@ function createCityButtons() {
 }
 
 async function fetchWeather(city) {
+  // Call server-side API which should read OPENWEATHERMAP_API_KEY from server env vars.
+  // On Vercel, configure the variable under Project Settings -> Environment Variables.
   const res = await fetch(`/api/weather?city=${encodeURIComponent(city)}`);
   if (!res.ok) {
-    const err = await res.json().catch(() => ({ error: 'unknown' }));
-    throw new Error(err.message || err.error || `HTTP ${res.status}`);
+    // try to read JSON error body, fallback to text
+    const body = await res.text().catch(() => '');
+    let parsed = null;
+    try { parsed = JSON.parse(body); } catch (e) { /* not JSON */ }
+    const msg = parsed?.error || parsed?.message || body || `HTTP ${res.status}`;
+    throw new Error(msg);
   }
   return res.json();
 }
