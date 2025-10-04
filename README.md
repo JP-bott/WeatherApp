@@ -17,5 +17,6 @@ Quick start
 3. Open http://localhost:3000 in your browser.
 
 Notes
-- The project uses the OpenWeatherMap API key from `.env`. The provided key has been written to `.env` already.
+- The project reads the OpenWeatherMap API key from a `.env` file at the project root using `dotenv`.
+   - A default `.env` has been created with the key for convenience. To use your own key, replace the value of `OPENWEATHERMAP_API_KEY` in `.env`.
 - Tailwind and Font Awesome are loaded via CDN in `public/index.html`.
