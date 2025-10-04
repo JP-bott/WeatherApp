@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NCR (Philippines) Weather App</title>
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="" crossorigin="anonymous" />
+  </head>
+  <body class="bg-slate-50 text-slate-800 min-h-screen">
+    <div class="max-w-4xl mx-auto p-6">
+      <header class="flex items-center justify-between mb-6">
+        <h1 class="text-2xl font-bold">NCR (Philippines) Weather</h1>
+        <div class="text-sm text-slate-600">Powered by OpenWeatherMap</div>
+      </header>
+
+      <section class="mb-6">
+  <p class="mb-3">Quick cities in the National Capital Region (Philippines):</p>
+        <div id="cities" class="flex flex-wrap gap-2"></div>
+      </section>
+
+      <section class="mb-6">
+        <label class="block text-sm mb-1">Search city</label>
+        <div class="flex gap-2">
+          <input id="cityInput" class="flex-1 px-3 py-2 border rounded" placeholder="Type city name (e.g. New Delhi)" />
+          <button id="searchBtn" class="px-4 py-2 bg-sky-600 text-white rounded">Search</button>
+        </div>
+      </section>
+
+      <section class="mb-6">
+        <label class="block text-sm mb-1">Display fields</label>
+        <div id="filters" class="flex flex-wrap gap-3 items-center">
+          <label class="flex items-center gap-2"><input type="checkbox" id="showIcon" /> <span class="text-sm">Icon</span></label>
+          <label class="flex items-center gap-2"><input type="checkbox" id="showTemp" checked /> <span class="text-sm">Temperature</span></label>
+          <label class="flex items-center gap-2"><input type="checkbox" id="showDesc" checked /> <span class="text-sm">Description</span></label>
+          <label class="flex items-center gap-2"><input type="checkbox" id="showHumidity" /> <span class="text-sm">Humidity</span></label>
+          <label class="flex items-center gap-2"><input type="checkbox" id="showWind" /> <span class="text-sm">Wind</span></label>
+        </div>
+      </section>
+
+      <section id="result" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></section>
+    </div>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
