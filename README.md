@@ -8,7 +8,7 @@ Quick start
 
    Open a terminal and run:
 
-   cd "c:\Users\ADMIN\Desktop\AWS\Projects\WeatherApp"; npm install
+   npm install
 
 2. Start the server
 
